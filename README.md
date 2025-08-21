@@ -1,2 +1,121 @@
-# HTMLFILE
-New web site 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AISI Cybersecurity Awareness</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7f8;
+            color: #333;
+        }
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #004080;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"] {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003366;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AISI Cybersecurity Awareness</h1>
+    </header>
+    <main>
+        <h2>Sign up for Cybersecurity Updates</h2>
+        <form id="signupForm" action="#" method="POST" onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Your full name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Your email address">
+
+            <button type="submit">Subscribe</button>
+        </form>
+        <div id="formMessage" class="message"></div>
+    </main>
+
+    <script>
+        // Simple client-side validation to defend against basic injection attacks
+        function sanitizeInput(input) {
+            return input.replace(/[<>\/\\'"`;&]/g, '');
+        }
+
+        function validateForm() {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.textContent = '';
+            messageDiv.classList.remove('error');
+
+            const name = sanitizeInput(nameInput.value.trim());
+            const email = sanitizeInput(emailInput.value.trim());
+
+            // Basic regex for email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!name) {
+                messageDiv.textContent = 'Name cannot be empty or contain invalid characters.';
+                messageDiv.classList.add('error');
+                return false;
+            }
+
+            if (!emailRegex.test(email)) {
+                messageDiv.textContent = 'Please enter a valid email address.';
+                messageDiv.classList.add('error');
+                return false;
+            }
+
+            // Form submission simulation
+            messageDiv.textContent = `Thank you for subscribing, ${name}!`;
+            nameInput.value = '';
+            emailInput.value = '';
+            return false;  // Prevent actual form submission in this demo
+        }
+    </script>
+</body>
+</html>
